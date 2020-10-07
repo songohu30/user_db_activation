@@ -17,23 +17,27 @@ require 'rvt_wt_db.php';
 
 require 'rvt_wt_ipquery.php';
 
-//if the user is found in the database there are 3 possibilities
+//if the user serial is found in the database there are 3 possibilities
 if(mysqli_num_rows($result) == 1)
 {
 	switch ($db_pc_uid)
 		{
+			//the serial has no pc_uid assigned and is free to use
 			case null:
 				require 'rvt_wt_case1.php';
 				break;
+			//the serial has pc_uid assigned and it is equal to calling pc_uid
 			case $pc_uid:
 				require 'rvt_wt_case2.php';
 				break;
+			//the serial has pc_uid assigned and it is different than calling pc_uid
 			default:
 				require 'rvt_wt_case3.php';
 		}
 }
 else
 {
+	//the serial is not found in database
 	require 'rvt_wt_case4.php';
 }
 mysqli_close($db);
